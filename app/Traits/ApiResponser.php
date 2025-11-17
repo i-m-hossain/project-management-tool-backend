@@ -17,7 +17,7 @@ trait ApiResponser
             'message' => $message,
             "code" => $code,
             'data' => $data
-        ]);
+        ], $code);
     }
 
     protected function error(
@@ -37,7 +37,7 @@ trait ApiResponser
         if(app()->environment() !== 'production'){
             $response['trace'] = $trace;
         }
-        return  response()->json($response);
+        return  response()->json($response, $code);
     }
 
 }
