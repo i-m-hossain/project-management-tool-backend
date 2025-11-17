@@ -28,13 +28,16 @@ trait ApiResponser
         $data = []
     ): JsonResponse
     {
-        return response()->json([
+        $response = [
             "status" => "Error",
             "message" => $message,
             'code' => $code,
             "data" => $data,
-        ] + app('env') != 'production' ?  ['trace' => $trace] : []);
-
+        ];
+        if(app()->environment() !== 'production'){
+            $response['trace'] = $trace;
+        }
+        return  response()->json($response);
     }
 
 }

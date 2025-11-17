@@ -16,13 +16,12 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(TaskRequest $request)
+    public function index(Request $request)
     {
         try{
             $page = $request->get('page', 1);
             $tasks = $this->taskService->getTasks(10, $page);
             return $this->success($tasks);
-
         }catch (\Exception $exception){
             $this->error($exception->getMessage(), $exception->getCode(), $exception);
         }
@@ -39,9 +38,15 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        try {
+            $data = $this->taskService->storeTask($request);
+            return  $this->success($data);
+
+        }catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 
     /**
