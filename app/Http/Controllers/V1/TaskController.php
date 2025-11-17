@@ -7,6 +7,7 @@ use App\Http\Requests\V1\TaskRequest;
 use App\Models\Task;
 use App\Services\V1\TaskService;
 use App\Traits\ApiResponser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -16,34 +17,26 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request):JsonResponse
     {
         try{
             $page = $request->get('page', 1);
             $tasks = $this->taskService->getTasks(10, $page);
             return $this->success($tasks);
         }catch (\Exception $exception){
-            $this->error($exception->getMessage(), $exception->getCode(), $exception);
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TaskRequest $request)
+    public function store(TaskRequest $request):JsonResponse
     {
         try {
             $data = $this->taskService->storeTask($request);
             return  $this->success($data);
-
         }catch (\Exception $exception){
             return $this->error($exception->getMessage(), $exception->getCode(), $exception);
         }
@@ -54,23 +47,25 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
+        try {
+            return $this->success($task);
+        }
+        catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        try {
+            $data = $this->taskService->updateTask($request, $task);
+            return  $this->success($data);
+        }catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 
     /**
@@ -78,7 +73,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        try {
+            $data =  $this->taskService->deleteTask($task);
+            return $this->success($data);
+        }catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 
     public function assign(Request $request, Task $task){

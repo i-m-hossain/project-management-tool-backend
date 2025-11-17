@@ -11,7 +11,6 @@ class TaskService
     public function getTasks(int $size = 100, int $page = 1){
         return $this->task::paginate($size, ['*'], 'page', $page );
     }
-
     public function storeTask(TaskRequest $request){
 
         return $this->task::create([
@@ -22,5 +21,15 @@ class TaskService
             'project_id'=> $request->project_id
         ]);
     }
+
+    public function updateTask(TaskRequest $request, Task $task){
+        return $task->update($request->all());
+    }
+
+    public function deleteTask(Task $task){
+        return $task->delete();
+    }
+
+
 
 }
