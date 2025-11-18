@@ -51,7 +51,17 @@ class UserController extends Controller
             $data = $this->userService->profile($request);
             return $this->success($data);
         }catch(\Exception $e){
-            $this->error($e->getMessage(), $e->getCode());
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function tasks(Request $request):JsonResponse
+    {
+        try {
+            $data = $this->userService->getTasks($request->user());
+            return $this->success($data);
+        }catch(\Exception $e){
+            return $this->error($e->getMessage(), $e->getCode());
         }
     }
 }

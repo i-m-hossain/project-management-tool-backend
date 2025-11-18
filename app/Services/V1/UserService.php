@@ -6,6 +6,7 @@ use App\Http\Requests\V1\LoginRequest;
 use App\Http\Requests\V1\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -42,7 +43,13 @@ class UserService
         return "Logged out";
     }
 
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
         return $request->user();
+    }
+
+    public function getTasks(User $user)
+    {
+          return $user->tasks()->get();
     }
 }

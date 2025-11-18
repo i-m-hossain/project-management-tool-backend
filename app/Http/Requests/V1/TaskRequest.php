@@ -25,7 +25,7 @@ class TaskRequest extends FormRequest
             'title' => 'required',
             'description' => 'nullable',
             'status' => 'nullable|in:1,2,3,4,5',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
             'project_id' => 'required|exists:projects,id',
         ];
     }

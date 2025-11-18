@@ -17,7 +17,7 @@ class TaskService
             'title' => $request->title,
             'description' => $request->description,
             'status' => $request-> status ?? 1,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id ?? $request->user()->id,
             'project_id'=> $request->project_id
         ]);
     }
