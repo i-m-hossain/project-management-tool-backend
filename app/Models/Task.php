@@ -19,4 +19,9 @@ class Task extends Model
     public function project():BelongsTo{
         return $this->belongsTo(Project::class);
     }
+
+    public function assignTask($taskId, $userId){
+        return self::where('id', $taskId)
+            ->update(['user_id' => $userId]);
+    }
 }

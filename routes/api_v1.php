@@ -17,9 +17,13 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // tasks
     Route::apiResource('tasks', TaskController::class);
-    Route::post('tasks/assign/{userId}', [TaskController::class, 'assign']);
+    Route::patch('tasks/{taskId}/user/{userId}', [TaskController::class, 'assignTask']);
 
     Route::apiResource('projects', ProjectController::class);
+    Route::get('project/{projectId}/users', [ProjectController::class, 'getUsersByProjectId']);
+    Route::get('project/{projectId}/tasks', [ProjectController::class, 'getTasksByProjectId']);
+    Route::post('/projects/{projectId}/users/{userId}', [ProjectController::class, 'assignUser']);
+
 });
 
 

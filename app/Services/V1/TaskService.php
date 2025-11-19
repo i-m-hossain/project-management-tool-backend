@@ -30,6 +30,9 @@ class TaskService
         return $task->delete();
     }
 
-
+    public function assignTask($taskId, $userId)
+    {
+        return $this->task->assignTask($taskId, $userId);
+    }
 
 }

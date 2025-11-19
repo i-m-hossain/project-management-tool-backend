@@ -45,7 +45,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Task $task):JsonResponse
     {
         try {
             return $this->success($task);
@@ -58,7 +58,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TaskRequest $request, Task $task)
+    public function update(TaskRequest $request, Task $task):JsonResponse
     {
         try {
             $data = $this->taskService->updateTask($request, $task);
@@ -71,7 +71,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Task $task):JsonResponse
     {
         try {
             $data =  $this->taskService->deleteTask($task);
@@ -81,7 +81,17 @@ class TaskController extends Controller
         }
     }
 
-    public function assign(Request $request, Task $task){
-
+    public function assignTask(Request $request)
+    {
+        try {
+            $userId = $request->userId;
+            $taskId = $request->taskId;
+            $data = $this->taskService->assignTask($taskId, $userId);
+            return $this->success($data);
+        }catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
+
+
 }

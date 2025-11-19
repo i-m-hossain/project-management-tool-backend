@@ -18,7 +18,7 @@ class UserService
 
     public function register(RegisterRequest $request)
     {
-        return $this->user->create([
+        return $this->user->createUser([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)

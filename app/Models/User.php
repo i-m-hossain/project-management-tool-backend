@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,9 +49,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function projects(): HasMany
+    public function projects(): BelongsToMany
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class);
     }
 
     public  function tasks(): HasMany
@@ -59,11 +60,11 @@ class User extends Authenticatable
     }
 
     public function createUser($userData){
-        return $this::create($userData);
+        return self::create($userData);
     }
 
     public function findUserByEmail($email)
     {
-        return $this::where('email', $email)->first ();
+        return self::where('email', $email)->first ();
     }
 }
