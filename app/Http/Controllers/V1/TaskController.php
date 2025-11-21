@@ -81,7 +81,7 @@ class TaskController extends Controller
         }
     }
 
-    public function assignTask(Request $request)
+    public function assignTask(Request $request): JsonResponse
     {
         try {
             $userId = $request->userId;
@@ -91,6 +91,19 @@ class TaskController extends Controller
         }catch (\Exception $exception){
             return $this->error($exception->getMessage(), $exception->getCode(), $exception);
         }
+    }
+
+    public function getProjectByTaskId(Request $request):JsonResponse
+    {
+
+        try {
+            $taskId= $request->taskId;
+            $data= $this->taskService->getProjectByTaskId($taskId);
+            return $this->success($data);
+        }catch (\Exception $exception){
+            return $this->error($exception->getMessage(), $exception->getCode(), $exception);
+        }
+
     }
 
 

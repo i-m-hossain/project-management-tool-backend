@@ -103,7 +103,7 @@ class ProjectController extends Controller
     public function getTasksByProjectId(Request $request): JsonResponse
     {
         try {
-            $projectId = $request->get('projectId');
+            $projectId = $request->projectId;
             $data = $this->projectService->getTasksByProjectId($projectId);
             return $this->success($data);
         }catch (\Exception $exception){

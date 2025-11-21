@@ -18,7 +18,9 @@ Route::middleware('auth:sanctum')->group(function(){
     // tasks
     Route::apiResource('tasks', TaskController::class);
     Route::patch('tasks/{taskId}/user/{userId}', [TaskController::class, 'assignTask']);
+    Route::post('task/{taskId}/project', [TaskController::class, 'getProjectByTaskId']);
 
+    //projects
     Route::apiResource('projects', ProjectController::class);
     Route::get('project/{projectId}/users', [ProjectController::class, 'getUsersByProjectId']);
     Route::get('project/{projectId}/tasks', [ProjectController::class, 'getTasksByProjectId']);

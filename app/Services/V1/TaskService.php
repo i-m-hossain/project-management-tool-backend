@@ -35,4 +35,7 @@ class TaskService
         return $this->task->assignTask($taskId, $userId);
     }
 
+    public function getProjectByTaskId($taskId){
+        return Task::find($taskId)->project;
+    }
 }

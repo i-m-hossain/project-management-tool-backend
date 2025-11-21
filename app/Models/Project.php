@@ -68,7 +68,6 @@ class Project extends Model
     public function assignUserToProject($projectId, $userId){
         $project =  Project::find($projectId);
         return $project->users()->syncWithoutDetaching([$userId]);
-//        return "User assigned to project successfully!";
     }
 
 
