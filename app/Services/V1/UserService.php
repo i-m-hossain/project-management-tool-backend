@@ -18,11 +18,13 @@ class UserService
 
     public function register(RegisterRequest $request)
     {
-        return $this->user->createUser([
+        $user =  $this->user->createUser([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+        $user->assignRole('Developer');
+        return $user;
     }
 
     public function login(LoginRequest $request)
@@ -51,5 +53,19 @@ class UserService
     public function getTasks(User $user)
     {
           return $user->tasks()->get();
+    }
+
+    public function updateRole($userId, $role)
+    {
+        User::find($userId)->syncRoles([$role]);
+        return "User role updated successfully";
+    }
+
+    public function getUserRoleByUserId($userId){
+        $user =  User::find($userId);
+        if(!$user){
+            throw new \Exception("User not found",401);
+        }
+        return $user->getRoleNames();
     }
 }

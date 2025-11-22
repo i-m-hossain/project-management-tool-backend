@@ -11,20 +11,26 @@ Route::post('login', [UserController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function(){
+
+    //users
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('profile', [UserController::class, 'profile']);
     Route::get('user/tasks', [UserController::class, 'tasks']);
+    Route::get('user/{userId}/role', [UserController::class, 'getUserRoleByUserId']);
+    Route::put('user/{userId}/role', [UserController::class, 'updateRole'])
+        ->middleware('role:admin');
 
     // tasks
     Route::apiResource('tasks', TaskController::class);
     Route::patch('tasks/{taskId}/user/{userId}', [TaskController::class, 'assignTask']);
     Route::post('task/{taskId}/project', [TaskController::class, 'getProjectByTaskId']);
 
+
     //projects
     Route::apiResource('projects', ProjectController::class);
     Route::get('project/{projectId}/users', [ProjectController::class, 'getUsersByProjectId']);
     Route::get('project/{projectId}/tasks', [ProjectController::class, 'getTasksByProjectId']);
-    Route::post('/projects/{projectId}/users/{userId}', [ProjectController::class, 'assignUser']);
+    Route::post('projects/{projectId}/users/{userId}', [ProjectController::class, 'assignUser']);
 
 });
 

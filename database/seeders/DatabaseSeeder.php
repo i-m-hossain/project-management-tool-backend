@@ -18,8 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        Project::factory(2)->create();
-        Task::factory(50)->create();
+
+        if (User::count() === 0) {
+            User::factory(30)->create();
+        }
+
+        if( Project::count() === 0){
+            Project::factory(2)->create();
+        }
+
+        if(Task::count() === 0){
+            Task::factory(50)->create();
+        }
+
+
+        $this->call(RoleNPermissionSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

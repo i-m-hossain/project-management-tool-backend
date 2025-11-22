@@ -64,4 +64,26 @@ class UserController extends Controller
             return $this->error($e->getMessage(), $e->getCode());
         }
     }
+
+    public function updateRole(Request $request):JsonResponse
+    {
+        try {
+            $userId = $request->userId;
+            $role = $request->role;
+            $data = $this->userService->updateRole($userId, $role);
+            return $this->success($data);
+        }catch (\Exception $e){
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function getUserRoleByUserId(Request $request):JsonResponse
+    {
+        try {
+            $data = $this->userService->getUserRoleByUserId($request->userId);
+            return $this->success($data);
+        }catch(\Exception $e){
+            return $this->error($e->getMessage(), $e->getCode());
+        }
+    }
 }
